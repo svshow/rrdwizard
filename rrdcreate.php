@@ -210,7 +210,7 @@ if (gpost('step', 'n') <= 0) {
 			</select>
 		</td>
 		<td>
-			<?echo_h_steplist('dsheartbeat', 0, $i, array(0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 5.0, 10.0), 1)?>
+			<?php echo_h_steplist('dsheartbeat', 0, $i, array(0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 5.0, 10.0), 1)?>
 		</td>
 		<td><input type="text" name="dsmin_<?=$i?>" value="<?=h(gpost("dsmin_$i", '', ''))?>" size="5"></td>
 		<td><input type="text" name="dsmax_<?=$i?>" value="<?=h(gpost("dsmax_$i", '', ''))?>" size="5"></td>
@@ -276,7 +276,7 @@ if (gpost('step', 'n') <= 0) {
 			</select>
 		</td>
 		<td>
-			<?echo_h_steplist('rrasteps', 0, $i, array(0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 40, 50, 100, 200, 288, 300), 0)?>
+			<?php echo_h_steplist('rrasteps', 0, $i, array(0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 40, 50, 100, 200, 288, 300), 0)?>
 		</td>
 		<td>
 			<input type="text" name="rrarows_<?=$i?>" id="rrarows_<?=$i?>" value="<?=h(gpost("rrarows_$i", 'n', 1))?>" size="5">

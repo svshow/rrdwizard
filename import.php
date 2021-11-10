@@ -110,8 +110,8 @@ $err = parse_input();
 		<input name="step" type="hidden" value="<?=h($step)?>">
 		<input name="ds_rows" type="hidden" value="<?=h(count($ds_p))?>">
 		<input name="rra_rows" type="hidden" value="<?=h(count($rra_p))?>">
-		<?dump_p($ds_p, 'ds')?>
-		<?dump_p($rra_p, 'rra')?>
+		<?php dump_p($ds_p, 'ds')?>
+		<?php dump_p($rra_p, 'rra')?>
 		<input type="submit" value="Proceed to Graph a RRD">
 	</form>
 	</dt>

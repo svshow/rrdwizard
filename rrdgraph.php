@@ -294,7 +294,7 @@ foreach ($opts as $name => $data) {
 			} else {
 		?>
 		<select name="<?=$name?>">
-			<?echo_h_simpleoption($name, $data[2], $values)?>
+			<?php echo_h_simpleoption($name, $data[2], $values)?>
 		</select>
 		<?php
 			}
@@ -344,12 +344,12 @@ foreach ($opts as $name => $data) {
 	</td>
 	<td>
 		<select name="def_ds_<?=$i?>">
-			<?echo_h_simpleoption("def_ds_$i", $ds_names[0], $ds_names)?>
+			<?php echo_h_simpleoption("def_ds_$i", $ds_names[0], $ds_names)?>
 		</select>
 	</td>
 	<td>
 		<select name="def_cf_<?=$i?>">
-			<?echo_h_simpleoption("def_cf_$i", $rra_cfs[0], $rra_cfs)?>
+			<?php echo_h_simpleoption("def_cf_$i", $rra_cfs[0], $rra_cfs)?>
 		</select>
 	</td>
 </tr>
@@ -397,7 +397,7 @@ foreach ($opts as $name => $data) {
 	</td>
 	<td>
 		<select name="cdef_ds_<?=$i?>" id="cdef_ds_<?=$i?>">
-			<?echo_h_simpleoption("cdef_ds_$i", $vnames[0], $vnames)?>
+			<?php echo_h_simpleoption("cdef_ds_$i", $vnames[0], $vnames)?>
 		</select>
 	</td>
 	<td>
@@ -455,12 +455,12 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 	</td>
 	<td>
 		<select name="vdef_ds_<?=$i?>" id="vdef_ds_<?=$i?>">
-			<?echo_h_simpleoption("vdef_ds_$i", $vnames[0], $vnames)?>
+			<?php echo_h_simpleoption("vdef_ds_$i", $vnames[0], $vnames)?>
 		</select>
 	</td>
 	<td>
 		<select name="vdef_function_<?=$i?>">
-			<?echo_h_simpleoption("vdef_function_$i", 'LAST', array('MAXIMUM', 'MINIMUM', 'AVERAGE', 'LAST', 'FIRST', 'TOTAL'))?>
+			<?php echo_h_simpleoption("vdef_function_$i", 'LAST', array('MAXIMUM', 'MINIMUM', 'AVERAGE', 'LAST', 'FIRST', 'TOTAL'))?>
 			<option value="STDEV">Standard deviation</option>
 			<?php foreach (array(95,10,20,30,40,50,60,70,80,90) as $p) { ?>
 			<option value="<?=$p?>,PERCENT"><?=$p?>th percentile</option>
@@ -469,7 +469,7 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 	</td>
 	<td>
 		<select name="vdef_vline_<?=$i?>">
-			<?echo_h_simpleoption("vdef_vline_$i", 'no', array('no', 'yes'))?>
+			<?php echo_h_simpleoption("vdef_vline_$i", 'no', array('no', 'yes'))?>
 		</select>
 	</td>
 	<td>
@@ -515,17 +515,17 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 	<tr>
 		<td>
 			<select name="line_width_<?=$i?>">
-				<?echo_h_simpleoption("line_width_$i", 1, array(1,2,3,4,5))?>
+				<?php echo_h_simpleoption("line_width_$i", 1, array(1,2,3,4,5))?>
 			</select>
 		</td>
 		<td>
 			<select name="line_area_<?=$i?>">
-				<?echo_h_simpleoption("line_area_$i", 'no', array('yes', 'no'))?>
+				<?php echo_h_simpleoption("line_area_$i", 'no', array('yes', 'no'))?>
 			</select>
 		</td>
 		<td>
 			<select name="line_ds_<?=$i?>">
-				<?echo_h_simpleoption("line_ds_$i", '---', array_merge(array('---'), $vnames, $vdef_vnames))?>
+				<?php echo_h_simpleoption("line_ds_$i", '---', array_merge(array('---'), $vnames, $vdef_vnames))?>
 			</select>
 		</td>
 		<td>
@@ -602,19 +602,19 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 	<tr>
 		<td>
 			<select name="print_ds_<?=$i?>">
-				<?echo_h_simpleoption("print_ds_$i", '---', array_merge(array('---'), $vdef_vnames))?>
+				<?php echo_h_simpleoption("print_ds_$i", '---', array_merge(array('---'), $vdef_vnames))?>
 			</select>
 		</td>
 		<td>
 			<select name="print_vformat_<?=$i?>">
-				<?echo_h_simpleoption("print_vformat_$i",
+				<?php echo_h_simpleoption("print_vformat_$i",
 					$def_vformat,
 					$vformats)?>
 			</select>
 		</td>
 		<td>
 			<select name="print_si_<?=$i?>">
-				<?echo_h_simpleoption("print_si_$i", '',
+				<?php echo_h_simpleoption("print_si_$i", '',
 					array(array('no' => ''), array('yes, independent' => '%s'), array('yes, same unit for all labels' => '%S')))?>
 			</select>
 		</td>
@@ -623,7 +623,7 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 		</td>
 		<td>
 			<select name="print_just_<?=$i?>">
-				<?echo_h_simpleoption("print_just_$i", '',
+				<?php echo_h_simpleoption("print_just_$i", '',
 					array(
 						array('none' => ''), array('justified' => '\\j'), array('left aligned' => '\\l'),
 						array('right aligned' => '\\r'), array('centered' => '\\c'),
@@ -633,12 +633,12 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 		</td>
 		<td>
 			<select name="print_inside_<?=$i?>">
-				<?echo_h_simpleoption("print_inside_$i", 'no', array('no', 'yes'))?>
+				<?php echo_h_simpleoption("print_inside_$i", 'no', array('no', 'yes'))?>
 			</select>
 		</td>
 		<!--<td>
 			<select name="print_tformat_<?=$i?>">
-				<?echo_h_simpleoption("print_tformat_$i", 'Do not print the time at all', array('Do not print the time at all', 'no'))?>
+				<?php echo_h_simpleoption("print_tformat_$i", 'Do not print the time at all', array('Do not print the time at all', 'no'))?>
 			</select>
 		</td>-->
 	</tr>
