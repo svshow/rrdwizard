@@ -1,4 +1,4 @@
-<?
+<?php
 error_reporting(E_ALL);
 ini_set('display_errors', '0');
 
@@ -110,7 +110,7 @@ function echo_h_simpleoption($select_name, $select_def_value, $opt_array) {
 		$selected = ($v == gpost($select_name, '', $select_def_value));
 	?>
 		<option<?=($selected ? ' selected' : '')?> value="<?=h($v)?>"><?=h($k)?></option>
-	<?
+	<?php
 	}
 }
 

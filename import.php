@@ -1,4 +1,4 @@
-<?
+<?php
 require_once('common.php');
 require('header.php');
 
@@ -89,7 +89,7 @@ function dump_p($ar, $name) {
 		foreach ($data as $k => $v) {
 		?>
 		<input name="<?=$name?><?=$k?>_<?=$i?>" type="hidden" value="<?=h($v)?>">
-		<?
+		<?php
 		}
 	}
 }
@@ -97,12 +97,12 @@ function dump_p($ar, $name) {
 $err = parse_input();
 ?>
 
-<? if ($err != '') { ?>
+<?php if ($err != '') { ?>
 <h1 id="error" style="background-color: red">ERROR</h1>
 <p><?=h($err)?></p>
-<? } ?>
+<?php } ?>
 
-<? if ($got_data) { ?>
+<?php if ($got_data) { ?>
 <h1 id="ok" style="background-color: green">Parsing successful</h1>
 <dl>
 	<dt>
@@ -116,7 +116,7 @@ $err = parse_input();
 	</form>
 	</dt>
 </dl>
-<? } ?>
+<?php } ?>
 
 <form method="post" action="?">
 <h1 id="links">This section allows you to import and then create a graph for an existing RRD</h1>
@@ -128,5 +128,5 @@ $err = parse_input();
 	</dd>
 </dl>
 </form>
-<?
+<?php
 require('footer.php');

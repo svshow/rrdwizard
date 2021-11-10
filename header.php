@@ -1,4 +1,4 @@
-<?
+<?php
 function navi_link($file, $desc) {
 	$script_name = basename($_SERVER['SCRIPT_NAME']);
 
@@ -27,7 +27,7 @@ function acronym($name, $desc) {
     <link rel="stylesheet" type="text/css" href="sinorca/sinorca-print.css" media="print" />
 
     <title>RRDtool Wizard</title>
-    <?
+    <?php
     	if (isset($additional_head_html)) {
 		echo $additional_head_html;
 	}

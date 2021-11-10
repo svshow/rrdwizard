@@ -1,4 +1,4 @@
-<?
+<?php
 require_once('common.php');
 require('header.php');
 
@@ -9,7 +9,7 @@ function step_acronym() {
 function echo_h_steplist($name, $def_value, $i, $steps_array, $select_gets_t) {
 ?>
 			<select id="<?=$name?>_sel_<?=$i?>" onchange="setValue('<?=$name?>_<?=$i?>', this.value)">
-				<?
+				<?php
 					foreach ($steps_array as $multi) {
 						$t = $multi * gpost('step', 'n');
 						$h_label = h(sprintf('%.1f step%s = %s', $multi, ($multi > 1 ? 's' : ''), hr_sec($t)));
@@ -24,13 +24,13 @@ function echo_h_steplist($name, $def_value, $i, $steps_array, $select_gets_t) {
 						$selected = ($cmp_val == gpost("{$name}_{$i}", 'n', $def_value));
 				?>
 				<option value="<?=($select_gets_t ? $t : $multi)?>"<?=($selected ? ' selected' : '')?>><?=$h_label?></option>
-				<?
+				<?php
 					}
 				?>
 			</select>
 			<input type="text" name="<?=$name?>_<?=$i?>" id="<?=$name?>_<?=$i?>"
 				value="<?=h(gpost("{$name}_{$i}", 'n', $def_value))?>" size="5">
-<?
+<?php
 }
 
 function rrdcreate_cmd() {
@@ -109,12 +109,12 @@ function setValue(id, value) {
 <!--<form method="POST" id="form1" action='?nocache=<?=time()?>#bottom'>-->
 <form method="POST" id="form1" action='?'>
 
-<?
+<?php
 if (gpost('step', 'n') > 0) {
 ?>
 <h1 id='error' style="background-color: magenta">Next step</h1>
 <p>Please scroll down and fill in the forms. The end result is at the bottom of the page.</p>
-<?
+<?php
 }
 ?>
 
@@ -124,9 +124,9 @@ if (gpost('step', 'n') > 0) {
 	<td>Time interval in <em>seconds</em> with which data will be fed by an update script (<b>step</b>):</td>
 	<td>
 		<select id="step_sel" onchange="setValue('step', this.value)">
-			<? foreach (array(0, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 10800, 21600, 43200, 86400) as $t) { ?>
+			<?php foreach (array(0, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 10800, 21600, 43200, 86400) as $t) { ?>
 			<option value="<?=$t?>"<?=($t == gpost('step', 'n') ? ' selected' : '')?>><?=h(hr_sec($t))?></option>
-			<? } ?>
+			<?php } ?>
 		</select>
 	</td>
 	<td><input type="text" name="step" id="step" value="<?=h(gpost('step', 'n'))?>" size="5"></td>
@@ -136,7 +136,7 @@ if (gpost('step', 'n') > 0) {
 	<td>&nbsp;</td>
 	<td>
 		<select name="start">
-			<?
+			<?php
 			$ar = array();
 			$ar[] = array('now' => '');
 			$startm = gmdate('n');
@@ -156,12 +156,12 @@ if (gpost('step', 'n') > 0) {
 <tr><td colspan="3"><input type="submit" value="Submit"></td>
 </table>
 
-<?
+<?php
 if (gpost('step', 'n') <= 0) {
 ?>
 <h1 id='error' style="background-color: magenta">Next step</h1>
 <p>Please select a "step".</p>
-<?
+<?php
 }
 ?>
 
@@ -201,7 +201,7 @@ if (gpost('step', 'n') <= 0) {
 		<td class="tdheader">Max</td>
 	</tr>
 
-	<? for ($i = 0; $i < gpost('ds_rows', 'n'); ++$i) { ?>
+	<?php for ($i = 0; $i < gpost('ds_rows', 'n'); ++$i) { ?>
 	<tr>
 		<td><input type="text" name="dsname_<?=$i?>" value="<?=h(gpost("dsname_{$i}", '', ''))?>"></td>
 		<td>
@@ -215,7 +215,7 @@ if (gpost('step', 'n') <= 0) {
 		<td><input type="text" name="dsmin_<?=$i?>" value="<?=h(gpost("dsmin_$i", '', ''))?>" size="5"></td>
 		<td><input type="text" name="dsmax_<?=$i?>" value="<?=h(gpost("dsmax_$i", '', ''))?>" size="5"></td>
 	</tr>
-	<? } ?>
+	<?php } ?>
 
 	</table>
 
@@ -255,7 +255,7 @@ if (gpost('step', 'n') <= 0) {
 		<td class="tdheader">Calculated value (submit to refresh)</td>
 	</tr>
 
-	<? for ($i = 0; $i < gpost('rra_rows', 'n'); ++$i) { ?>
+	<?php for ($i = 0; $i < gpost('rra_rows', 'n'); ++$i) { ?>
 	<tr>
 		<td>
 			<select name="rracf_<?=$i?>">
@@ -264,13 +264,13 @@ if (gpost('step', 'n') <= 0) {
 		</td>
 		<td>
 			<select name="rraxff_<?=$i?>">
-				<?
+				<?php
 				foreach (array(0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99) as $v) {
 					$sv = sprintf('%d%%', $v*100);
 					$selected = ($v == gpost("rraxff_$i", 'n', 0.5));
 				?>
 				<option value="<?=$v?>"<?=($selected ? ' selected' : '')?>><?=$sv?></option>
-				<?
+				<?php
 				}
 				?>
 			</select>
@@ -283,14 +283,14 @@ if (gpost('step', 'n') <= 0) {
 		</td>
 		<td><?=h_rra_finalinfo(gpost('step', 'n'), gpost("rrasteps_$i", 'n'), gpost("rrarows_$i", 'n'))?></td>
 	</tr>
-	<? } ?>
+	<?php } ?>
 
 	</table>
 	</dd>
 <dt><input type="submit" value="Submit"></dt>
 </dl>
 
-<?
+<?php
 $rrdcmd = rrdcreate_cmd();
 $rrdcmd_error = preg_match('/# ERROR:/', $rrdcmd);
 ?>
@@ -298,15 +298,15 @@ $rrdcmd_error = preg_match('/# ERROR:/', $rrdcmd);
 <a name="cmd"><h1 id="archives" style="background-color: <?=($rrdcmd_error ? 'red' : 'green')?>">RRD create command</h1></a>
 <p><pre><?=h(rrdcreate_cmd())?></pre></p>
 
-<? if (!$rrdcmd_error) { ?>
+<?php if (!$rrdcmd_error) { ?>
 <a name="graph"><h1 id="graph_wizard" style="background-color: green">RRD graph wizard</h1></a>
 <p><input value="Start graph wizard" type="button" onclick="f=document.getElementById('form1');f.action='rrdgraph.php';f.submit()"></p>
-<? } ?>
+<?php } ?>
 
 <!--<a name="bottom"></a>-->
 
 </div>
 
 </form>
-<?
+<?php
 require('footer.php');

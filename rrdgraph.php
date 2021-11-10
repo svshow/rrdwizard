@@ -1,4 +1,4 @@
-<?
+<?php
 require_once('common.php');
 $additional_head_html = '<script src="colorpicker/201a.js" type="text/javascript"></script>'."\n";
 require('header.php');
@@ -13,7 +13,7 @@ function h_color_picker($name, $i, $value) {
 				value="<?=h($value)?>"
 				onchange="document.getElementById('<?=$name?>_sample_<?=$i?>').style.backgroundColor=this.value">&nbsp;
 			<input type="text" ID="<?=$name?>_sample_<?=$i?>" size="1" value="" style="background-color: <?=h($value)?>">
-<?
+<?php
 }
 
 function color_verify($s, $def) {
@@ -187,20 +187,20 @@ function show_color_picker(divname, val1, val2) {
 <p>
 <form method="POST" id="form1" action="?nocache=<?=time()?>#bottom">
 
-<? if ($err) { ?>
+<?php if ($err) { ?>
 
 <h1 id="error" style="background-color: red">Error</h1>
 <p>Please create the RRD first using the <a href="rrdcreate.php">Create a RRD</a> wizard.</p>
 <p>Alternatively you can import the structure of an existing RRD using the <a href="import.php">Import a RRD</a> wizard.</p>
 
-<? } else { ?>
+<?php } else { ?>
 
 <h1 id="info">RRD details</h1>
 <dl>
 <dt>Available data sources (input data)</dt>
 	<dd>
 	<table border="0">
-<?
+<?php
 	printf('<input name="step" type="hidden" value="%s">'."\n", h(gpost('step', 'n')));
 
 	printf('<input name="ds_rows" type="hidden" value="%s">'."\n", h(gpost('ds_rows', 'n')));
@@ -216,7 +216,7 @@ function show_color_picker(divname, val1, val2) {
 	<td class="tdheader">Data source:</td>
 	<td><?=h("$name ($type)")?></td>
 </tr>
-<?
+<?php
 	}
 ?>
 	</table>
@@ -224,7 +224,7 @@ function show_color_picker(divname, val1, val2) {
 <dt>Available archives for each data source (this is what you can visualize)</dt>
 	<dd>
 	<table border="0">
-<?
+<?php
 	$i = 0;
 	printf('<input name="rra_rows" type="hidden" value="%s">'."\n", h(gpost('rra_rows', 'n')));
 	for ($i = 0; $i < gpost('rra_rows', 'n'); ++$i) {
@@ -241,7 +241,7 @@ function show_color_picker(divname, val1, val2) {
 	<td class="tdheader"><?=h($cf)?>:</td>
 	<td><?=h_rra_finalinfo(gpost('step', 'n'), $steps, $rows)?></td>
 </tr>
-<?
+<?php
 }
 $rra_cfs = array_unique($rra_cfs);
 ?>
@@ -259,7 +259,7 @@ $rra_cfs = array_unique($rra_cfs);
 	<td class="tdheader">Required</td>
 	<td class="tdheader">Value</td>
 </tr>
-<?
+<?php
 $opts = array(
 	'rrdfilename' => array('RRD filename', '', 'db.rrd', array(), 1),
 	'graphfilename' => array('Graph filename', '', 'graph.png', array(), 1),
@@ -286,22 +286,22 @@ foreach ($opts as $name => $data) {
 	<td><?=h($data[0])?></td>
 	<td><?=($data[4] ? '<b>Yes</b>' : 'No')?></td>
 	<td>
-		<?
+		<?php
 			if (count($values) == 0) {
 		?>
 		<input type="text" name="<?=$name?>" value="<?=h($curr_value)?>">
-		<?
+		<?php
 			} else {
 		?>
 		<select name="<?=$name?>">
 			<?echo_h_simpleoption($name, $data[2], $values)?>
 		</select>
-		<?
+		<?php
 			}
 		?>
 	</td>
 </tr>
-<?
+<?php
 }
 ?>
 
@@ -316,7 +316,7 @@ foreach ($opts as $name => $data) {
 <dt><input type="submit" value="Submit"></dt>
 </dl>
 
-<? if ($stage >= 1) { ?>
+<?php if ($stage >= 1) { ?>
 <h1 id="def-data-series">Standard data series definition (DEF)</h1>
 <dl>
 <dt>Use an existing data source:</dt>
@@ -328,7 +328,7 @@ foreach ($opts as $name => $data) {
 	<td class="tdheader">CF funtion</td>
 </tr>
 
-<?
+<?php
 	$got = 0;
 	$ar = array();
 	for ($i = 0; $i < count($ds_names)*count($rra_cfs); ++$i) {
@@ -353,7 +353,7 @@ foreach ($opts as $name => $data) {
 		</select>
 	</td>
 </tr>
-<?
+<?php
 	}
 	$vnames = array_merge($vnames, $ar);
 	if ($got && $stage < 2) $stage = 2;
@@ -366,9 +366,9 @@ foreach ($opts as $name => $data) {
 </dt>
 <dt><input type="submit" value="Submit"></dt>
 </dl>
-<? } ?>
+<?php } ?>
 
-<? if ($stage >= 2) { ?>
+<?php if ($stage >= 2) { ?>
 <h1 id="cdef-data-series">Dynamic data series definition (CDEF)</h1>
 <dl>
 <dt>Create in-memory data series by applying some math on the DEF data sources which you specified above</dt>
@@ -381,7 +381,7 @@ foreach ($opts as $name => $data) {
 	<td class="tdheader">Formula syntax (edit to suit your needs)</td>
 </tr>
 
-<?
+<?php
 	$max_num_cdefs = count($vnames) * /* count of possible formulas, let's assume something */ 3;
 	if ($max_num_cdefs > 12) $max_num_cdefs = 12;
 	$ar = array();
@@ -412,7 +412,7 @@ foreach ($opts as $name => $data) {
 		<input type="text" name="cdef_formula_<?=$i?>" id="cdef_formula_<?=$i?>" size="30" value="<?=h(gpost("cdef_formula_$i", '', ''))?>">
 	</td>
 </tr>
-<?
+<?php
 	}
 	$vnames = array_merge($vnames, $ar);
 ?>
@@ -422,9 +422,9 @@ foreach ($opts as $name => $data) {
 </dd>
 <dt><input type="submit" value="Update"> <input type="submit" value="Done defining CDEFs" name="cdefdone"></dt>
 </dl>
-<? } ?>
+<?php } ?>
 
-<? if ($stage >= 3) { ?>
+<?php if ($stage >= 3) { ?>
 <h1 id="vdef-data-series">Dynamic labels definition (VDEF)</h1>
 <dl>
 <dt>Single aggregated data/time value for the whole <b>visualized</b> dataset</dt>
@@ -440,7 +440,7 @@ foreach ($opts as $name => $data) {
 	<td class="tdheader">VLINE optional legend</td>
 </tr>
 
-<? 
+<?php
 $max_num_vdefs = count($vnames) * /* count of possible functions, let's assume something */ 8;
 if ($max_num_vdefs > 12) $max_num_vdefs = 12;
 for ($i = 0; $i < $max_num_vdefs; ++$i) {
@@ -462,9 +462,9 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 		<select name="vdef_function_<?=$i?>">
 			<?echo_h_simpleoption("vdef_function_$i", 'LAST', array('MAXIMUM', 'MINIMUM', 'AVERAGE', 'LAST', 'FIRST', 'TOTAL'))?>
 			<option value="STDEV">Standard deviation</option>
-			<? foreach (array(95,10,20,30,40,50,60,70,80,90) as $p) { ?>
+			<?php foreach (array(95,10,20,30,40,50,60,70,80,90) as $p) { ?>
 			<option value="<?=$p?>,PERCENT"><?=$p?>th percentile</option>
-			<? } ?>
+			<?php } ?>
 		</select>
 	</td>
 	<td>
@@ -479,7 +479,7 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 		<input type="text" name="vdef_legend_<?=$i?>" size="30" value="<?=h(gpost("vdef_legend_$i", '', ''))?>">
 	</td>
 </tr>
-<? } ?>
+<?php } ?>
 <tr>
 	<td colspan="6"><b>* VLINE</b> = Place a vertical line where this value occurs</td>
 </tr>
@@ -489,9 +489,9 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 </dd>
 <dt><input type="submit" value="Update"> <input type="submit" value="Done defining VDEFs" name="vdefdone"></dt>
 </dl>
-<? } ?>
+<?php } ?>
 
-<? if ($stage >= 4) { ?>
+<?php if ($stage >= 4) { ?>
 <h1 id="lines">Data series visualization</h1>
 <dl>
 <dt>These are the LINES and AREAS that you typically see in your graph area</dt>
@@ -506,7 +506,7 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 		<td class="tdheader">Legend text (may be empty)</td>
 	</tr>
 
-	<? 
+	<?php
 	$max_num_lines = count(array_merge($vnames, $vdef_vnames)) * 3;
 	if ($max_num_lines > 16) $max_num_lines = 16;
 	$entered_lines = 0;
@@ -535,7 +535,7 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 			<input type="text" name="line_legend_<?=$i?>" size="30" value="<?=h(gpost("line_legend_$i", '', ''))?>">
 		</td>
 	</tr>
-	<?
+	<?php
 		if (
 			isset($_POST["line_ds_$i"]) && $_POST["line_ds_$i"] != '---' &&
 			isset($_POST["line_color_$i"]) && $_POST["line_color_$i"] != ''
@@ -548,9 +548,9 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 <dt><input type="submit" value="Update"> <input type="submit" value="Done defining LINES" name="linesdone"></dt>
 <input type="hidden" name="lines_cnt" value="<?=$i?>">
 </dl>
-<? } ?>
+<?php } ?>
 
-<? if ($stage >= 5) { ?>
+<?php if ($stage >= 5) { ?>
 <h1 id="lines">Labels visualization</h1>
 <dl>
 <dt>These are the LABELS that you typically see beneath your graph area. You can print only VDEF single-value sources.</dt>
@@ -566,7 +566,7 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 		<!--<td class="tdheader">Time format</td>-->
 	</tr>
 
-	<? 
+	<?php
 	$max_num_lines = count($vdef_vnames);
 	if ($max_num_lines > 16) $max_num_lines = 16;
 	if ($max_num_lines == 0 && $stage < 6) {
@@ -642,7 +642,7 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 			</select>
 		</td>-->
 	</tr>
-	<? } ?>
+	<?php } ?>
 
 	</table>
 	</dd>
@@ -650,10 +650,10 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 <input type="hidden" name="labels_cnt" value="<?=$i?>">
 <input type="submit" value="Update"> <input type="submit" value="Done defining LABELS" name="labelsdone"></dt>
 </dl>
-<? } ?>
+<?php } ?>
 
-<? if ($stage >= 6) { ?>
-<?
+<?php if ($stage >= 6) { ?>
+<?php
 	$err = check_vnames(array_merge($vnames, $vdef_vnames), 0);
 	if ($err == '') {
 		if ($entered_lines == 0) $err = '# ERROR: You defined no LINES/AREAS at "Data series visualization".';
@@ -663,12 +663,12 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 ?>
 	<h1 id="error" style="background-color: red">Error</h1>
 	<p><?=h($err)?></p>
-<?
+<?php
 	} else {
 ?>
 		<a name="cmd"><h1 id="archives" style="background-color: green">RRD graph command</h1></a>
 		<p><pre>
-<?
+<?php
 		echo "# The command is escaped for Linux bash\n\n";
 		#print_r($_POST);
 		#echo "STAGE: $stage";
@@ -676,14 +676,14 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 	}
 ?>
 </pre></p>
-<? } else { ?>
+<?php } else { ?>
 	<h1 style="background-color: magenta">Next action</h1>
 	<p><?=h($stage_next_action[$stage])?>.</p>
-<? } // stage < 6 ?>
+<?php } // stage < 6 ?>
 
 <a name="bottom"></a>
 <input type="hidden" name="stage" value="<?=$stage?>">
-<? } /* no error */ ?>
+<?php } /* no error */ ?>
 </form>
-<?
+<?php
 require('footer.php');

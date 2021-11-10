@@ -1,4 +1,4 @@
-<?
+<?php
 require_once('common.php');
 require('header.php');
 
@@ -30,5 +30,5 @@ function alink($url, $desc) {
 	<dt>repository</dt>
 			<dd><?=alink('https://github.com/famzah/rrdwizard', 'You can contribute at GitHub')?></dd>
 </dl>
-<?
+<?php
 require('footer.php');

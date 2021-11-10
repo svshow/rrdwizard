@@ -1,4 +1,4 @@
-<?
+<?php
 require_once('common.php');
 require('header.php');
 ?>
@@ -28,5 +28,5 @@ require('header.php');
 			</dd>
 
 </dl>
-<?
+<?php
 require('footer.php');
