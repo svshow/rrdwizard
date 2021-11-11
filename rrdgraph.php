@@ -5,14 +5,14 @@ require('header.php');
 
 function h_color_picker($name, $i, $value) {
 ?>
-			<a href="javascript:onclick=show_color_picker('<?=$name?>_picker', '<?=$name?>_color_<?=$i?>','<?=$name?>_sample_<?=$i?>');">Select Color</a>:&nbsp;
+			<a href="javascript:onclick=show_color_picker('<?php print $name?>_picker', '<?php print $name?>_color_<?php print $i?>','<?php print $name?>_sample_<?php print $i?>');">Select Color</a>:&nbsp;
 			<input
 				type="text" size="9"
-				name="<?=$name?>_color_<?=$i?>"
-				ID="<?=$name?>_color_<?=$i?>"
-				value="<?=h($value)?>"
-				onchange="document.getElementById('<?=$name?>_sample_<?=$i?>').style.backgroundColor=this.value">&nbsp;
-			<input type="text" ID="<?=$name?>_sample_<?=$i?>" size="1" value="" style="background-color: <?=h($value)?>">
+				name="<?php print $name?>_color_<?php print $i?>"
+				ID="<?php print $name?>_color_<?php print $i?>"
+				value="<?php print h($value)?>"
+				onchange="document.getElementById('<?php print $name?>_sample_<?php print $i?>').style.backgroundColor=this.value">&nbsp;
+			<input type="text" ID="<?php print $name?>_sample_<?php print $i?>" size="1" value="" style="background-color: <?php print h($value)?>">
 <?php
 }
 
@@ -185,7 +185,7 @@ function show_color_picker(divname, val1, val2) {
 </script>
 
 <p>
-<form method="POST" id="form1" action="?nocache=<?=time()?>#bottom">
+<form method="POST" id="form1" action="?nocache=<?php print time()?>#bottom">
 
 <?php if ($err) { ?>
 
@@ -214,7 +214,7 @@ function show_color_picker(divname, val1, val2) {
 ?>
 <tr>
 	<td class="tdheader">Data source:</td>
-	<td><?=h("$name ($type)")?></td>
+	<td><?php print h("$name ($type)")?></td>
 </tr>
 <?php
 	}
@@ -238,8 +238,8 @@ function show_color_picker(divname, val1, val2) {
 		$rra_cfs[] = $cf;
 ?>
 <tr>
-	<td class="tdheader"><?=h($cf)?>:</td>
-	<td><?=h_rra_finalinfo(gpost('step', 'n'), $steps, $rows)?></td>
+	<td class="tdheader"><?php print h($cf)?>:</td>
+	<td><?php print h_rra_finalinfo(gpost('step', 'n'), $steps, $rows)?></td>
 </tr>
 <?php
 }
@@ -283,17 +283,17 @@ foreach ($opts as $name => $data) {
 	}
 ?>
 <tr>
-	<td><?=h($data[0])?></td>
-	<td><?=($data[4] ? '<b>Yes</b>' : 'No')?></td>
+	<td><?php print h($data[0])?></td>
+	<td><?php print ($data[4] ? '<b>Yes</b>' : 'No')?></td>
 	<td>
 		<?php
 			if (count($values) == 0) {
 		?>
-		<input type="text" name="<?=$name?>" value="<?=h($curr_value)?>">
+		<input type="text" name="<?php print $name?>" value="<?php print h($curr_value)?>">
 		<?php
 			} else {
 		?>
-		<select name="<?=$name?>">
+		<select name="<?php print $name?>">
 			<?php echo_h_simpleoption($name, $data[2], $values)?>
 		</select>
 		<?php
@@ -340,15 +340,15 @@ foreach ($opts as $name => $data) {
 ?>
 <tr>
 	<td>
-		<input type="text" name="def_vname_<?=$i?>" size="10" value="<?=h($vname)?>">
+		<input type="text" name="def_vname_<?php print $i?>" size="10" value="<?php print h($vname)?>">
 	</td>
 	<td>
-		<select name="def_ds_<?=$i?>">
+		<select name="def_ds_<?php print $i?>">
 			<?php echo_h_simpleoption("def_ds_$i", $ds_names[0], $ds_names)?>
 		</select>
 	</td>
 	<td>
-		<select name="def_cf_<?=$i?>">
+		<select name="def_cf_<?php print $i?>">
 			<?php echo_h_simpleoption("def_cf_$i", $rra_cfs[0], $rra_cfs)?>
 		</select>
 	</td>
@@ -361,7 +361,7 @@ foreach ($opts as $name => $data) {
 ?>
 
 </table>
-<input type="hidden" name="def_cnt" value="<?=$i?>">
+<input type="hidden" name="def_cnt" value="<?php print $i?>">
 </dd>
 </dt>
 <dt><input type="submit" value="Submit"></dt>
@@ -393,15 +393,15 @@ foreach ($opts as $name => $data) {
 ?>
 <tr>
 	<td>
-		<input type="text" name="cdef_vname_<?=$i?>" size="10" value="<?=h($vname)?>">
+		<input type="text" name="cdef_vname_<?php print $i?>" size="10" value="<?php print h($vname)?>">
 	</td>
 	<td>
-		<select name="cdef_ds_<?=$i?>" id="cdef_ds_<?=$i?>">
+		<select name="cdef_ds_<?php print $i?>" id="cdef_ds_<?php print $i?>">
 			<?php echo_h_simpleoption("cdef_ds_$i", $vnames[0], $vnames)?>
 		</select>
 	</td>
 	<td>
-		<select onchange="if (this.value == '') return true;setValue('cdef_formula_<?=$i?>', document.getElementById('cdef_ds_<?=$i?>').value + ',' + this.value)">
+		<select onchange="if (this.value == '') return true;setValue('cdef_formula_<?php print $i?>', document.getElementById('cdef_ds_<?php print $i?>').value + ',' + this.value)">
 			<option value="">---</option>
 			<option value="8,*">* 8</option>
 			<option value="1000,/">/ 1000</option>
@@ -409,7 +409,7 @@ foreach ($opts as $name => $data) {
 		</select>
 	</td>
 	<td>
-		<input type="text" name="cdef_formula_<?=$i?>" id="cdef_formula_<?=$i?>" size="30" value="<?=h(gpost("cdef_formula_$i", '', ''))?>">
+		<input type="text" name="cdef_formula_<?php print $i?>" id="cdef_formula_<?php print $i?>" size="30" value="<?php print h(gpost("cdef_formula_$i", '', ''))?>">
 	</td>
 </tr>
 <?php
@@ -418,7 +418,7 @@ foreach ($opts as $name => $data) {
 ?>
 
 </table>
-<input type="hidden" name="cdef_cnt" value="<?=$i?>">
+<input type="hidden" name="cdef_cnt" value="<?php print $i?>">
 </dd>
 <dt><input type="submit" value="Update"> <input type="submit" value="Done defining CDEFs" name="cdefdone"></dt>
 </dl>
@@ -451,32 +451,32 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 ?>
 <tr>
 	<td>
-		<input type="text" name="vdef_vname_<?=$i?>" size="10" value="<?=h($vname)?>">
+		<input type="text" name="vdef_vname_<?php print $i?>" size="10" value="<?php print h($vname)?>">
 	</td>
 	<td>
-		<select name="vdef_ds_<?=$i?>" id="vdef_ds_<?=$i?>">
+		<select name="vdef_ds_<?php print $i?>" id="vdef_ds_<?php print $i?>">
 			<?php echo_h_simpleoption("vdef_ds_$i", $vnames[0], $vnames)?>
 		</select>
 	</td>
 	<td>
-		<select name="vdef_function_<?=$i?>">
+		<select name="vdef_function_<?php print $i?>">
 			<?php echo_h_simpleoption("vdef_function_$i", 'LAST', array('MAXIMUM', 'MINIMUM', 'AVERAGE', 'LAST', 'FIRST', 'TOTAL'))?>
 			<option value="STDEV">Standard deviation</option>
 			<?php foreach (array(95,10,20,30,40,50,60,70,80,90) as $p) { ?>
-			<option value="<?=$p?>,PERCENT"><?=$p?>th percentile</option>
+			<option value="<?php print $p?>,PERCENT"><?php print $p?>th percentile</option>
 			<?php } ?>
 		</select>
 	</td>
 	<td>
-		<select name="vdef_vline_<?=$i?>">
+		<select name="vdef_vline_<?php print $i?>">
 			<?php echo_h_simpleoption("vdef_vline_$i", 'no', array('no', 'yes'))?>
 		</select>
 	</td>
 	<td>
-		<?=h_color_picker('vdef', $i, gpost("vdef_color_$i", '', ''))?>
+		<?php print h_color_picker('vdef', $i, gpost("vdef_color_$i", '', ''))?>
 	</td>
 	<td>
-		<input type="text" name="vdef_legend_<?=$i?>" size="30" value="<?=h(gpost("vdef_legend_$i", '', ''))?>">
+		<input type="text" name="vdef_legend_<?php print $i?>" size="30" value="<?php print h(gpost("vdef_legend_$i", '', ''))?>">
 	</td>
 </tr>
 <?php } ?>
@@ -485,7 +485,7 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 </tr>
 
 </table>
-<input type="hidden" name="vdef_cnt" value="<?=$i?>">
+<input type="hidden" name="vdef_cnt" value="<?php print $i?>">
 </dd>
 <dt><input type="submit" value="Update"> <input type="submit" value="Done defining VDEFs" name="vdefdone"></dt>
 </dl>
@@ -514,25 +514,25 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 	?>
 	<tr>
 		<td>
-			<select name="line_width_<?=$i?>">
+			<select name="line_width_<?php print $i?>">
 				<?php echo_h_simpleoption("line_width_$i", 1, array(1,2,3,4,5))?>
 			</select>
 		</td>
 		<td>
-			<select name="line_area_<?=$i?>">
+			<select name="line_area_<?php print $i?>">
 				<?php echo_h_simpleoption("line_area_$i", 'no', array('yes', 'no'))?>
 			</select>
 		</td>
 		<td>
-			<select name="line_ds_<?=$i?>">
+			<select name="line_ds_<?php print $i?>">
 				<?php echo_h_simpleoption("line_ds_$i", '---', array_merge(array('---'), $vnames, $vdef_vnames))?>
 			</select>
 		</td>
 		<td>
-			<?=h_color_picker('line', $i, gpost("line_color_$i", '', ''))?>
+			<?php print h_color_picker('line', $i, gpost("line_color_$i", '', ''))?>
 		</td>
 		<td>
-			<input type="text" name="line_legend_<?=$i?>" size="30" value="<?=h(gpost("line_legend_$i", '', ''))?>">
+			<input type="text" name="line_legend_<?php print $i?>" size="30" value="<?php print h(gpost("line_legend_$i", '', ''))?>">
 		</td>
 	</tr>
 	<?php
@@ -546,7 +546,7 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 	</table>
 	</dd>
 <dt><input type="submit" value="Update"> <input type="submit" value="Done defining LINES" name="linesdone"></dt>
-<input type="hidden" name="lines_cnt" value="<?=$i?>">
+<input type="hidden" name="lines_cnt" value="<?php print $i?>">
 </dl>
 <?php } ?>
 
@@ -601,28 +601,28 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 	?>
 	<tr>
 		<td>
-			<select name="print_ds_<?=$i?>">
+			<select name="print_ds_<?php print $i?>">
 				<?php echo_h_simpleoption("print_ds_$i", '---', array_merge(array('---'), $vdef_vnames))?>
 			</select>
 		</td>
 		<td>
-			<select name="print_vformat_<?=$i?>">
+			<select name="print_vformat_<?php print $i?>">
 				<?php echo_h_simpleoption("print_vformat_$i",
 					$def_vformat,
 					$vformats)?>
 			</select>
 		</td>
 		<td>
-			<select name="print_si_<?=$i?>">
+			<select name="print_si_<?php print $i?>">
 				<?php echo_h_simpleoption("print_si_$i", '',
 					array(array('no' => ''), array('yes, independent' => '%s'), array('yes, same unit for all labels' => '%S')))?>
 			</select>
 		</td>
 		<td>
-			<input type="text" name="print_text_<?=$i?>" size="10" value="<?=h(gpost("print_text_$i", '', ''))?>">
+			<input type="text" name="print_text_<?php print $i?>" size="10" value="<?php print h(gpost("print_text_$i", '', ''))?>">
 		</td>
 		<td>
-			<select name="print_just_<?=$i?>">
+			<select name="print_just_<?php print $i?>">
 				<?php echo_h_simpleoption("print_just_$i", '',
 					array(
 						array('none' => ''), array('justified' => '\\j'), array('left aligned' => '\\l'),
@@ -632,12 +632,12 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 			</select>
 		</td>
 		<td>
-			<select name="print_inside_<?=$i?>">
+			<select name="print_inside_<?php print $i?>">
 				<?php echo_h_simpleoption("print_inside_$i", 'no', array('no', 'yes'))?>
 			</select>
 		</td>
 		<!--<td>
-			<select name="print_tformat_<?=$i?>">
+			<select name="print_tformat_<?php print $i?>">
 				<?php echo_h_simpleoption("print_tformat_$i", 'Do not print the time at all', array('Do not print the time at all', 'no'))?>
 			</select>
 		</td>-->
@@ -647,7 +647,7 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 	</table>
 	</dd>
 <dt>
-<input type="hidden" name="labels_cnt" value="<?=$i?>">
+<input type="hidden" name="labels_cnt" value="<?php print $i?>">
 <input type="submit" value="Update"> <input type="submit" value="Done defining LABELS" name="labelsdone"></dt>
 </dl>
 <?php } ?>
@@ -662,7 +662,7 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 	if ($err != '') {
 ?>
 	<h1 id="error" style="background-color: red">Error</h1>
-	<p><?=h($err)?></p>
+	<p><?php print h($err)?></p>
 <?php
 	} else {
 ?>
@@ -678,11 +678,11 @@ for ($i = 0; $i < $max_num_vdefs; ++$i) {
 </pre></p>
 <?php } else { ?>
 	<h1 style="background-color: magenta">Next action</h1>
-	<p><?=h($stage_next_action[$stage])?>.</p>
+	<p><?php print h($stage_next_action[$stage])?>.</p>
 <?php } // stage < 6 ?>
 
 <a name="bottom"></a>
-<input type="hidden" name="stage" value="<?=$stage?>">
+<input type="hidden" name="stage" value="<?php print $stage?>">
 <?php } /* no error */ ?>
 </form>
 <?php

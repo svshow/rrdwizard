@@ -44,11 +44,11 @@ function acronym($name, $desc) {
 
       <div class="subHeader">
         <span class="doNotDisplay">Navigation:</span>
-	<?=navi_link('index.php', 'Home')?> |
-	<?=navi_link('import.php', 'Import a RRD')?> |
-	<?=navi_link('rrdcreate.php', 'Create a RRD')?> |
-	<?=navi_link('rrdgraph.php', 'Graph a RRD')?> |
-	<?=navi_link('resources.php', 'Resources')?>
+	<?php print navi_link('index.php', 'Home')?> |
+	<?php print navi_link('import.php', 'Import a RRD')?> |
+	<?php print navi_link('rrdcreate.php', 'Create a RRD')?> |
+	<?php print navi_link('rrdgraph.php', 'Graph a RRD')?> |
+	<?php print navi_link('resources.php', 'Resources')?>
       </div>
     </div>
 

@@ -88,7 +88,7 @@ function dump_p($ar, $name) {
 	foreach ($ar as $i => $data) {
 		foreach ($data as $k => $v) {
 		?>
-		<input name="<?=$name?><?=$k?>_<?=$i?>" type="hidden" value="<?=h($v)?>">
+		<input name="<?php print $name?><?php print $k?>_<?php print $i?>" type="hidden" value="<?php print h($v)?>">
 		<?php
 		}
 	}
@@ -99,7 +99,7 @@ $err = parse_input();
 
 <?php if ($err != '') { ?>
 <h1 id="error" style="background-color: red">ERROR</h1>
-<p><?=h($err)?></p>
+<p><?php print h($err)?></p>
 <?php } ?>
 
 <?php if ($got_data) { ?>
@@ -107,9 +107,9 @@ $err = parse_input();
 <dl>
 	<dt>
 	<form method="post" action="rrdgraph.php">
-		<input name="step" type="hidden" value="<?=h($step)?>">
-		<input name="ds_rows" type="hidden" value="<?=h(count($ds_p))?>">
-		<input name="rra_rows" type="hidden" value="<?=h(count($rra_p))?>">
+		<input name="step" type="hidden" value="<?php print h($step)?>">
+		<input name="ds_rows" type="hidden" value="<?php print h(count($ds_p))?>">
+		<input name="rra_rows" type="hidden" value="<?php print h(count($rra_p))?>">
 		<?php dump_p($ds_p, 'ds')?>
 		<?php dump_p($rra_p, 'rra')?>
 		<input type="submit" value="Proceed to Graph a RRD">
@@ -123,7 +123,7 @@ $err = parse_input();
 <dl>
 	<dt>Please execute `rrdtool info <b>filename.rrd</b>` on your RRD file and then paste the whole output below:</dt>
 	<dd>
-		<textarea name="text" cols="80" rows="30"><?=h(gpost('text', '', ''))?></textarea><br>
+		<textarea name="text" cols="80" rows="30"><?php print h(gpost('text', '', ''))?></textarea><br>
 		<input type="submit" value="Submit">
 	</dd>
 </dl>

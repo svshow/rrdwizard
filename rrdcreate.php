@@ -8,7 +8,7 @@ function step_acronym() {
 
 function echo_h_steplist($name, $def_value, $i, $steps_array, $select_gets_t) {
 ?>
-			<select id="<?=$name?>_sel_<?=$i?>" onchange="setValue('<?=$name?>_<?=$i?>', this.value)">
+			<select id="<?php print $name?>_sel_<?php print $i?>" onchange="setValue('<?php print $name?>_<?php print $i?>', this.value)">
 				<?php
 					foreach ($steps_array as $multi) {
 						$t = $multi * gpost('step', 'n');
@@ -23,13 +23,13 @@ function echo_h_steplist($name, $def_value, $i, $steps_array, $select_gets_t) {
 						}
 						$selected = ($cmp_val == gpost("{$name}_{$i}", 'n', $def_value));
 				?>
-				<option value="<?=($select_gets_t ? $t : $multi)?>"<?=($selected ? ' selected' : '')?>><?=$h_label?></option>
+				<option value="<?php print ($select_gets_t ? $t : $multi)?>"<?php print ($selected ? ' selected' : '')?>><?php print $h_label?></option>
 				<?php
 					}
 				?>
 			</select>
-			<input type="text" name="<?=$name?>_<?=$i?>" id="<?=$name?>_<?=$i?>"
-				value="<?=h(gpost("{$name}_{$i}", 'n', $def_value))?>" size="5">
+			<input type="text" name="<?php print $name?>_<?php print $i?>" id="<?php print $name?>_<?php print $i?>"
+				value="<?php print h(gpost("{$name}_{$i}", 'n', $def_value))?>" size="5">
 <?php
 }
 
@@ -99,14 +99,14 @@ function setValue(id, value) {
 </script>
 
 <p>
-<div style="display:<?=(gpost('step', 'n') > 0 ? 'block' : 'none')?>">
+<div style="display:<?php print (gpost('step', 'n') > 0 ? 'block' : 'none')?>">
 <a href="#ds">&rsaquo; Data Sources (DS)</a><br>
 <a href="#rra">&rsaquo; Archives (RRA)</a><br>
 <a href="#cmd">&rsaquo; RRD create command</a><br>
 <a href="#graph">&rsaquo; RRD graph wizard</a>
 </div>
 
-<!--<form method="POST" id="form1" action='?nocache=<?=time()?>#bottom'>-->
+<!--<form method="POST" id="form1" action='?nocache=<?php print time()?>#bottom'>-->
 <form method="POST" id="form1" action='?'>
 
 <?php
@@ -125,11 +125,11 @@ if (gpost('step', 'n') > 0) {
 	<td>
 		<select id="step_sel" onchange="setValue('step', this.value)">
 			<?php foreach (array(0, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 10800, 21600, 43200, 86400) as $t) { ?>
-			<option value="<?=$t?>"<?=($t == gpost('step', 'n') ? ' selected' : '')?>><?=h(hr_sec($t))?></option>
+			<option value="<?php print $t?>"<?php print ($t == gpost('step', 'n') ? ' selected' : '')?>><?php print h(hr_sec($t))?></option>
 			<?php } ?>
 		</select>
 	</td>
-	<td><input type="text" name="step" id="step" value="<?=h(gpost('step', 'n'))?>" size="5"></td>
+	<td><input type="text" name="step" id="step" value="<?php print h(gpost('step', 'n'))?>" size="5"></td>
 </tr>
 <tr>
 	<td>Start time:</td>
@@ -151,8 +151,8 @@ if (gpost('step', 'n') > 0) {
 		</select>
 	</td>
 </tr>
-<tr><td>Data sources count:</td><td>&nbsp;</td><td><input type="text" name="ds_rows" value="<?=h(gpost('ds_rows', 'n', 4))?>" size="5"></td></tr>
-<tr><td>Archives count:</td><td>&nbsp;</td><td><input type="text" name="rra_rows" value="<?=h(gpost('rra_rows', 'n', 10))?>" size="5"></td></tr>
+<tr><td>Data sources count:</td><td>&nbsp;</td><td><input type="text" name="ds_rows" value="<?php print h(gpost('ds_rows', 'n', 4))?>" size="5"></td></tr>
+<tr><td>Archives count:</td><td>&nbsp;</td><td><input type="text" name="rra_rows" value="<?php print h(gpost('rra_rows', 'n', 10))?>" size="5"></td></tr>
 <tr><td colspan="3"><input type="submit" value="Submit"></td>
 </table>
 
@@ -165,7 +165,7 @@ if (gpost('step', 'n') <= 0) {
 }
 ?>
 
-<div style="display:<?=(gpost('step', 'n') > 0 ? 'block' : 'none')?>">
+<div style="display:<?php print (gpost('step', 'n') > 0 ? 'block' : 'none')?>">
 <a name="ds"><h1 id="data-sources">Data Sources (DS)</h1></a>
 <dl>
 <dt>Name</dt>
@@ -203,17 +203,17 @@ if (gpost('step', 'n') <= 0) {
 
 	<?php for ($i = 0; $i < gpost('ds_rows', 'n'); ++$i) { ?>
 	<tr>
-		<td><input type="text" name="dsname_<?=$i?>" value="<?=h(gpost("dsname_{$i}", '', ''))?>"></td>
+		<td><input type="text" name="dsname_<?php print $i?>" value="<?php print h(gpost("dsname_{$i}", '', ''))?>"></td>
 		<td>
-			<select name="dstype_<?=$i?>">
-			<?=echo_h_simpleoption("dstype_$i", 'GAUGE', array('GAUGE', 'COUNTER', 'DERIVE', 'ABSOLUTE'))?>
+			<select name="dstype_<?php print $i?>">
+			<?php print echo_h_simpleoption("dstype_$i", 'GAUGE', array('GAUGE', 'COUNTER', 'DERIVE', 'ABSOLUTE'))?>
 			</select>
 		</td>
 		<td>
 			<?php echo_h_steplist('dsheartbeat', 0, $i, array(0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 5.0, 10.0), 1)?>
 		</td>
-		<td><input type="text" name="dsmin_<?=$i?>" value="<?=h(gpost("dsmin_$i", '', ''))?>" size="5"></td>
-		<td><input type="text" name="dsmax_<?=$i?>" value="<?=h(gpost("dsmax_$i", '', ''))?>" size="5"></td>
+		<td><input type="text" name="dsmin_<?php print $i?>" value="<?php print h(gpost("dsmin_$i", '', ''))?>" size="5"></td>
+		<td><input type="text" name="dsmax_<?php print $i?>" value="<?php print h(gpost("dsmax_$i", '', ''))?>" size="5"></td>
 	</tr>
 	<?php } ?>
 
@@ -227,18 +227,18 @@ if (gpost('step', 'n') <= 0) {
 <dl>
 <dt>Consolidation functions (CF):</dt>
 	<dd>
-	AVERAGE: Average value for the <?=step_acronym()?> period.<br>
-	MIN: Min value for the <?=step_acronym()?> period.<br>
-	MAX: Max value for the <?=step_acronym()?> period.<br>
-	LAST: Last value for the <?=step_acronym()?> period which got inserted by the update script.<br>
+	AVERAGE: Average value for the <?php print step_acronym()?> period.<br>
+	MIN: Min value for the <?php print step_acronym()?> period.<br>
+	MAX: Max value for the <?php print step_acronym()?> period.<br>
+	LAST: Last value for the <?php print step_acronym()?> period which got inserted by the update script.<br>
 	</dd>
 <dt>xff</dt>
 	<dd>What percentage of UNKOWN data is allowed so that the consolidated value is still regarded as known: 0% - 99%. Typical is 50%.</dd>
 <dt>Steps</dt>
 	<dd>
-	How many <?=step_acronym()?> values will be used to build a <b>single</b> archive entry. 
+	How many <?php print step_acronym()?> values will be used to build a <b>single</b> archive entry. 
 	This defines the granularity of your archive, ie. its zoom level.<br>
-	If you define a small number here, you will be able to see the details for every <?=step_acronym()?>.<br> 
+	If you define a small number here, you will be able to see the details for every <?php print step_acronym()?>.<br> 
 	If you define a large number here, you will have some aggregated info for the last year, for example, 
 	but with less details and much more "zoom out" in regards to <b>time</b> on the X-axis while visualising this.
 	</dd>
@@ -258,18 +258,18 @@ if (gpost('step', 'n') <= 0) {
 	<?php for ($i = 0; $i < gpost('rra_rows', 'n'); ++$i) { ?>
 	<tr>
 		<td>
-			<select name="rracf_<?=$i?>">
-			<?=echo_h_simpleoption("rracf_$i", 'AVERAGE', array('AVERAGE', 'MIN', 'MAX', 'LAST'))?>
+			<select name="rracf_<?php print $i?>">
+			<?php print echo_h_simpleoption("rracf_$i", 'AVERAGE', array('AVERAGE', 'MIN', 'MAX', 'LAST'))?>
 			</select>
 		</td>
 		<td>
-			<select name="rraxff_<?=$i?>">
+			<select name="rraxff_<?php print $i?>">
 				<?php
 				foreach (array(0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99) as $v) {
 					$sv = sprintf('%d%%', $v*100);
 					$selected = ($v == gpost("rraxff_$i", 'n', 0.5));
 				?>
-				<option value="<?=$v?>"<?=($selected ? ' selected' : '')?>><?=$sv?></option>
+				<option value="<?php print $v?>"<?php print ($selected ? ' selected' : '')?>><?php print $sv?></option>
 				<?php
 				}
 				?>
@@ -279,9 +279,9 @@ if (gpost('step', 'n') <= 0) {
 			<?php echo_h_steplist('rrasteps', 0, $i, array(0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 40, 50, 100, 200, 288, 300), 0)?>
 		</td>
 		<td>
-			<input type="text" name="rrarows_<?=$i?>" id="rrarows_<?=$i?>" value="<?=h(gpost("rrarows_$i", 'n', 1))?>" size="5">
+			<input type="text" name="rrarows_<?php print $i?>" id="rrarows_<?php print $i?>" value="<?php print h(gpost("rrarows_$i", 'n', 1))?>" size="5">
 		</td>
-		<td><?=h_rra_finalinfo(gpost('step', 'n'), gpost("rrasteps_$i", 'n'), gpost("rrarows_$i", 'n'))?></td>
+		<td><?php print h_rra_finalinfo(gpost('step', 'n'), gpost("rrasteps_$i", 'n'), gpost("rrarows_$i", 'n'))?></td>
 	</tr>
 	<?php } ?>
 
@@ -295,8 +295,8 @@ $rrdcmd = rrdcreate_cmd();
 $rrdcmd_error = preg_match('/# ERROR:/', $rrdcmd);
 ?>
 
-<a name="cmd"><h1 id="archives" style="background-color: <?=($rrdcmd_error ? 'red' : 'green')?>">RRD create command</h1></a>
-<p><pre><?=h(rrdcreate_cmd())?></pre></p>
+<a name="cmd"><h1 id="archives" style="background-color: <?php print ($rrdcmd_error ? 'red' : 'green')?>">RRD create command</h1></a>
+<p><pre><?php print h(rrdcreate_cmd())?></pre></p>
 
 <?php if (!$rrdcmd_error) { ?>
 <a name="graph"><h1 id="graph_wizard" style="background-color: green">RRD graph wizard</h1></a>

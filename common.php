@@ -109,7 +109,7 @@ function echo_h_simpleoption($select_name, $select_def_value, $opt_array) {
 		}
 		$selected = ($v == gpost($select_name, '', $select_def_value));
 	?>
-		<option<?=($selected ? ' selected' : '')?> value="<?=h($v)?>"><?=h($k)?></option>
+		<option<?php print ($selected ? ' selected' : '')?> value="<?php print h($v)?>"><?php print h($k)?></option>
 	<?php
 	}
 }
